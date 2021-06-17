@@ -1,0 +1,59 @@
+programa
+{
+	inclua biblioteca Matematica -->mat  //biblioteca para diminuir o tamanho do numero final.
+	real invest[5],aplicado[5],soma,investido, atual[5],resultado[5], diferenca = resultado[0]
+	cadeia nome_carteira[5] = {"CDBs: ","Ações: ","Fundos Imobiliários: ","Stocks: ","Reits: "},nome = nome_carteira[0]
+	
+	funcao validacao(){  //procedimento de validação para não ter que escrever mais que 1 vez.
+			para(inteiro i = 0; i <= 4; i++){
+				escreva("digite quantos percento tem como objetivo investir em ",nome_carteira[i])
+				leia(invest[i]) limpa()		
+				enquanto(invest[i] < 0 ou invest[i] > 100){  //loop para o usuario nao digitar valores que ultrapassem 100% e numeros negativos.
+					escreva("por favor, digite um valor entre 0 e 100. \n(caso não queira investir na carteira digite 0)\n")
+					escreva("digite quantos percento tem como objetivo investir em ",nome_carteira[i])
+					leia(invest[i]) limpa()
+				}
+			}
+	}
+	funcao inicio(){
+		escreva("caso não queira investir na carteira, digite 0.\n")
+		validacao()
+		soma = invest[0]+invest[1]+invest[2]+invest[3]+invest[4]  
+		se(soma == 100){
+			escreva("certo! Agora vamos ver quanto tem investido em cada carteira...\n")
+		}senao{
+			enquanto(soma != 100){  //loop para certificar que o usuario distribuiu 100% os seus interesses.
+				soma=0.0
+				limpa()
+				escreva("os objetivos tem que completar 100 percento, por favor refaça...\n")
+				escreva("lembrando... caso não queira investir na carteira, digite 0.\n")
+				validacao()
+				soma = invest[0]+invest[1]+invest[2]+invest[3]+invest[4]
+			}
+			escreva("certo! Agora vamos ver quanto tem investido em cada carteira...\n")
+		}
+		para(inteiro i = 0; i <= 4; i++){
+			escreva("digite quantos R$ você já tem investido em ",nome_carteira[i])
+			leia(aplicado[i]) limpa()
+		}
+		investido = aplicado[0]+aplicado[1]+aplicado[2]+aplicado[3]+aplicado[4]
+		
+		escreva("legal! esses são seus investimentos(em percentagem) do objetivo pretendido e atual: \n")
+
+		para(inteiro i = 0; i <= 4; i++){   //resumo do pretendido com o atual investimento.
+			atual[i] = (aplicado[i]*100) / investido 
+			escreva("objetivo pretendido para ",nome_carteira[i],invest[i],"%, e tem atualmente investido: ",mat.arredondar(atual[i], 2),"%. \n")
+		}
+		para(inteiro i = 0; i <= 4; i++){ //calculo para pegar a maior diferença.
+			resultado[i] = invest[i] - atual[i]
+			se(resultado[i] < 0){
+				resultado[i] = resultado[i] * -1 //convertendo os valores negativos(ultrapassaram o pretendido) para positivos e ai sim pegar a mais desbalanceada.
+			}
+			se(diferenca < resultado[i]){
+				diferenca = resultado[i]
+				nome = nome_carteira[i]
+			}
+		}
+		escreva("\nA sua carteira mais desbalanceada por enquanto é ",nome," com ",mat.arredondar(diferenca,2),"% de diferença para completar o objetivo pretendido.")
+	}
+}
