@@ -6,7 +6,8 @@
 
 ## About this Project
 
-University exercise where I created a basic investment portfolio app.
+University exercise where I created a basic investment portfolio app.   
+*app created in Pseudocode at [Portugol Studio](http://lite.acad.univali.br/portugol/).
 
 
 ## Functionalities
